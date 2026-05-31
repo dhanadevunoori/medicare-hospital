@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – MediCare Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body style="background:#f4f8fb;">
+
+<div class="admin-sidebar">
+  <div class="sidebar-logo"><i class="bi bi-heart-pulse-fill me-2"></i>Medi<span>Care</span></div>
+  <nav class="sidebar-nav">
+    <a href="dashboard.html" class="active"><i class="bi bi-speedometer2"></i>Dashboard</a>
+    <a href="doctors.html"><i class="bi bi-people-fill"></i>Manage Doctors</a>
+    <a href="appointments.html"><i class="bi bi-calendar-check-fill"></i>Appointments</a>
+    <a href="../index.html" target="_blank"><i class="bi bi-house-fill"></i>View Website</a>
+  </nav>
+  <div style="margin-top:auto; padding:1.5rem;">
+    <button onclick="logout()" style="width:100%; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.8); padding:0.6rem; border-radius:8px; cursor:pointer; font-size:0.88rem;">
+      <i class="bi bi-box-arrow-right me-2"></i>Logout
+    </button>
+  </div>
+</div>
+
+<div class="admin-main">
+  <div class="admin-topbar">
+    <div><h5 class="mb-0" style="font-family:'Playfair Display',serif;">Dashboard Overview</h5></div>
+    <div id="adminUser" class="text-muted small"><i class="bi bi-person-circle me-1"></i>Admin</div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-sm-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <div>
+          <div class="stat-value" id="totalDoctors">–</div>
+          <div class="stat-label">Total Doctors</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:linear-gradient(135deg,#0d9e6e,#06b87e);">
+          <i class="bi bi-calendar-check-fill"></i>
+        </div>
+        <div>
+          <div class="stat-value" id="totalAppointments">–</div>
+          <div class="stat-label">Total Appointments</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:linear-gradient(135deg,#f5a623,#f5b93d);">
+          <i class="bi bi-hourglass-split"></i>
+        </div>
+        <div>
+          <div class="stat-value" id="pendingAppointments">–</div>
+          <div class="stat-label">Pending Appointments</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:linear-gradient(135deg,#7c3aed,#9461f5);">
+          <i class="bi bi-envelope-fill"></i>
+        </div>
+        <div>
+          <div class="stat-value" id="totalContacts">–</div>
+          <div class="stat-label">Contact Messages</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="data-table">
+        <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="background:white;">
+          <h6 class="mb-0" style="font-family:'Playfair Display',serif;">Recent Appointments</h6>
+          <a href="appointments.html" class="text-decoration-none small" style="color:var(--primary-light);">View all →</a>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead><tr><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody id="recentAppointments"><tr><td colspan="4" class="text-center text-muted py-4">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="data-table">
+        <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="background:white;">
+          <h6 class="mb-0" style="font-family:'Playfair Display',serif;">Our Doctors</h6>
+          <a href="doctors.html" class="text-decoration-none small" style="color:var(--primary-light);">Manage →</a>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead><tr><th>Name</th><th>Specialization</th><th>Available Days</th></tr></thead>
+            <tbody id="doctorsList"><tr><td colspan="3" class="text-center text-muted py-4">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+async function checkAuth() {
+  const res = await fetch('/api/admin/check', { credentials: 'include' });
+  const data = await res.json();
+  if (!data.success) { window.location.href = '/admin/login.html'; return; }
+  document.getElementById('adminUser').innerHTML = `<i class="bi bi-person-circle me-1"></i>${data.username}`;
+}
+
+async function loadStats() {
+  const res = await fetch('/api/admin/stats', { credentials: 'include' });
+  const data = await res.json();
+  if (data.success) {
+    document.getElementById('totalDoctors').textContent = data.totalDoctors;
+    document.getElementById('totalAppointments').textContent = data.totalAppointments;
+    document.getElementById('pendingAppointments').textContent = data.pendingAppointments;
+    document.getElementById('totalContacts').textContent = data.totalContacts;
+  }
+}
+
+async function loadRecentAppointments() {
+  const res = await fetch('/api/appointments', { credentials: 'include' });
+  const data = await res.json();
+  const tbody = document.getElementById('recentAppointments');
+  if (!data.success || data.appointments.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-4">No appointments yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.appointments.slice(0, 5).map(a => `
+    <tr>
+      <td>${a.patient_name}</td>
+      <td><small>${a.doctor_name}</small></td>
+      <td><small>${a.appointment_date}</small></td>
+      <td><span class="badge-status badge-${a.status}">${a.status}</span></td>
+    </tr>`).join('');
+}
+
+async function loadDoctorsList() {
+  const res = await fetch('/api/doctors');
+  const data = await res.json();
+  const tbody = document.getElementById('doctorsList');
+  if (!data.success || data.doctors.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No doctors.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.doctors.map(d => `
+    <tr><td><strong>${d.name}</strong></td><td><small>${d.specialization}</small></td><td><small>${d.available_days}</small></td></tr>
+  `).join('');
+}
+
+async function logout() {
+  await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
+  window.location.href = '/admin/login.html';
+}
+
+checkAuth();
+loadStats();
+loadRecentAppointments();
+loadDoctorsList();
+</script>
+</body>
+</html>

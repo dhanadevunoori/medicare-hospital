@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login – MediCare</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+<div class="admin-login-page">
+  <div class="login-card">
+    <div class="text-center mb-4">
+      <div style="font-size:3rem; color:var(--primary);"><i class="bi bi-heart-pulse-fill"></i></div>
+      <h3 style="font-family:'Playfair Display',serif; color:var(--primary);">MediCare Admin</h3>
+      <p class="text-muted small">Sign in to access the admin panel</p>
+    </div>
+
+    <div id="loginAlert" class="mb-3 d-none"></div>
+
+    <form id="loginForm">
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <div class="input-group">
+          <span class="input-group-text" style="border-color:var(--border);"><i class="bi bi-person"></i></span>
+          <input type="text" id="username" class="form-control" placeholder="admin" required />
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text" style="border-color:var(--border);"><i class="bi bi-lock"></i></span>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required />
+        </div>
+      </div>
+      <button type="submit" class="btn-submit" id="loginBtn">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+      </button>
+    </form>
+
+    <div class="text-center mt-3">
+      <small class="text-muted">Default: <code>admin</code> / <code>admin123</code></small>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const alertBox = document.getElementById('loginAlert');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner me-2"></span>Signing in...';
+
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      window.location.href = '/admin/dashboard.html';
+    } else {
+      alertBox.className = 'mb-3 alert-error-custom';
+      alertBox.innerHTML = `<i class="bi bi-x-circle-fill"></i><span>${data.message}</span>`;
+      alertBox.classList.remove('d-none');
+    }
+  } catch(err) {
+    alertBox.className = 'mb-3 alert-error-custom';
+    alertBox.innerHTML = '<i class="bi bi-x-circle-fill"></i><span>Network error.</span>';
+    alertBox.classList.remove('d-none');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Sign In';
+});
+
+// Redirect if already logged in
+fetch('/api/admin/check', { credentials: 'include' })
+  .then(r => r.json())
+  .then(d => { if (d.success) window.location.href = '/admin/dashboard.html'; });
+</script>
+</body>
+</html>

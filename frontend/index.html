@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediCare Hospital – Advanced Healthcare for All</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <i class="bi bi-heart-pulse-fill"></i> Medi<span>Care</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="doctors.html">Doctors</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item ms-2">
+          <a class="nav-link btn-appointment-nav" href="appointment.html">Book Appointment</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 hero-content">
+        <div class="hero-badge"><i class="bi bi-shield-check-fill"></i> Trusted Healthcare Since 2005</div>
+        <h1>Your Health Is Our <em>Top Priority</em></h1>
+        <p>World-class medical care with compassionate doctors, advanced diagnostics, and patient-centered treatment for every stage of life.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="appointment.html" class="btn-primary-custom">
+            <i class="bi bi-calendar-check"></i> Book Appointment
+          </a>
+          <a href="doctors.html" class="btn-outline-custom">
+            <i class="bi bi-people"></i> Meet Our Doctors
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="number">20K+</span><span class="label">Patients Treated</span></div>
+          <div class="hero-stat"><span class="number">50+</span><span class="label">Specialist Doctors</span></div>
+          <div class="hero-stat"><span class="number">18+</span><span class="label">Years of Excellence</span></div>
+        </div>
+      </div>
+      <div class="col-lg-6 hero-image-area d-none d-lg-block">
+        <div class="hero-image-card">
+          <div style="font-size:4.5rem; color: white; opacity: 0.9;">
+            <i class="bi bi-hospital-fill"></i>
+          </div>
+          <h4 style="color:white; font-family:'Playfair Display',serif; margin-top:1rem;">MediCare Hospital</h4>
+          <p style="color:rgba(255,255,255,0.8); font-size:0.9rem;">Excellence in Healthcare</p>
+          <div class="hero-icon-grid">
+            <div class="hero-icon-item"><i class="bi bi-heart-pulse"></i> Cardiology</div>
+            <div class="hero-icon-item"><i class="bi bi-brain"></i> Neurology</div>
+            <div class="hero-icon-item"><i class="bi bi-person-heart"></i> Pediatrics</div>
+            <div class="hero-icon-item"><i class="bi bi-bandaid"></i> Orthopedics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section-pad services-bg">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Comprehensive <span>Medical Services</span></h2>
+      <p class="text-muted mx-auto" style="max-width:560px;">From preventive care to advanced surgical interventions, we provide complete healthcare solutions under one roof.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:linear-gradient(135deg,#fde8e8,#fff0f0);">
+            <i class="bi bi-heart-pulse" style="color:#e84545;"></i>
+          </div>
+          <h5>Cardiology</h5>
+          <p class="text-muted small">Advanced cardiac care including diagnostics, interventional procedures, and heart disease management.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:linear-gradient(135deg,#e8f4fd,#f0f8ff);">
+            <i class="bi bi-brain" style="color:#0a4d68;"></i>
+          </div>
+          <h5>Neurology</h5>
+          <p class="text-muted small">Expert diagnosis and treatment for neurological conditions, brain disorders, and nervous system diseases.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:linear-gradient(135deg,#d4f5ec,#e8fdf6);">
+            <i class="bi bi-person-heart" style="color:#0d9e6e;"></i>
+          </div>
+          <h5>Pediatrics</h5>
+          <p class="text-muted small">Dedicated child health services with compassionate care from newborns to adolescents.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:linear-gradient(135deg,#fff3cd,#fffbeb);">
+            <i class="bi bi-bandaid" style="color:#f5a623;"></i>
+          </div>
+          <h5>Orthopedics</h5>
+          <p class="text-muted small">Surgical and non-surgical treatment for bone, joint, and musculoskeletal conditions.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:linear-gradient(135deg,#f0e6ff,#faf0ff);">
+            <i class="bi bi-clipboard2-pulse" style="color:#7c3aed;"></i>
+          </div>
+          <h5>Diagnostics</h5>
+          <p class="text-muted small">State-of-the-art lab testing, imaging (MRI, CT, X-Ray), and pathology services.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:linear-gradient(135deg,#e0f2fe,#f0f9ff);">
+            <i class="bi bi-hospital" style="color:#0284c7;"></i>
+          </div>
+          <h5>Emergency Care</h5>
+          <p class="text-muted small">24/7 emergency department staffed with skilled physicians for all critical and urgent cases.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTORS PREVIEW -->
+<section class="section-pad">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-label">Our Team</div>
+      <h2 class="section-title">Meet Our <span>Expert Doctors</span></h2>
+    </div>
+    <div class="row g-4" id="homeDoctorsGrid">
+      <div class="col-12 text-center py-5">
+        <div class="spinner" style="border-top-color:var(--primary); border-color:var(--border);"></div>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <a href="doctors.html" class="btn-primary-custom" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));">
+        View All Doctors <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section-pad services-bg">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <div class="section-label">Why MediCare</div>
+        <h2 class="section-title">Why Patients <span>Trust Us</span></h2>
+        <p class="text-muted mb-4">We combine medical excellence with heartfelt compassion to deliver care that truly makes a difference.</p>
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex align-items-start gap-3">
+            <div class="service-icon" style="background:linear-gradient(135deg,var(--primary),var(--primary-light)); min-width:48px; height:48px;">
+              <i class="bi bi-award-fill" style="color:white;"></i>
+            </div>
+            <div><strong>Accredited Excellence</strong><p class="text-muted small mb-0">NABH-accredited with international quality standards and protocols.</p></div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="service-icon" style="background:linear-gradient(135deg,var(--primary),var(--primary-light)); min-width:48px; height:48px;">
+              <i class="bi bi-clock-history" style="color:white;"></i>
+            </div>
+            <div><strong>24/7 Availability</strong><p class="text-muted small mb-0">Round-the-clock emergency and critical care services, always ready.</p></div>
+          </div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="service-icon" style="background:linear-gradient(135deg,var(--primary),var(--primary-light)); min-width:48px; height:48px;">
+              <i class="bi bi-person-check-fill" style="color:white;"></i>
+            </div>
+            <div><strong>Patient-Centered Care</strong><p class="text-muted small mb-0">Personalized treatment plans tailored to every individual patient's needs.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-3">
+          <div class="col-6"><div class="service-card text-center py-4"><div style="font-size:2.5rem; color:var(--primary-light);">🏆</div><h4 class="mt-2" style="font-family:'Playfair Display',serif;">Best Hospital 2023</h4><p class="text-muted small">State Health Award</p></div></div>
+          <div class="col-6"><div class="service-card text-center py-4"><div style="font-size:2.5rem;">⭐</div><h4 class="mt-2" style="font-family:'Playfair Display',serif;">4.9/5 Rating</h4><p class="text-muted small">From 8,000+ Reviews</p></div></div>
+          <div class="col-6"><div class="service-card text-center py-4"><div style="font-size:2.5rem; color:var(--success);">✅</div><h4 class="mt-2" style="font-family:'Playfair Display',serif;">NABH Certified</h4><p class="text-muted small">Quality Accredited</p></div></div>
+          <div class="col-6"><div class="service-card text-center py-4"><div style="font-size:2.5rem; color:var(--accent);">🔬</div><h4 class="mt-2" style="font-family:'Playfair Display',serif;">Advanced Lab</h4><p class="text-muted small">500+ Diagnostic Tests</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-pad" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));">
+  <div class="container text-center">
+    <h2 style="color:white; font-size:2.2rem; margin-bottom:1rem;">Ready to Take Care of Your Health?</h2>
+    <p style="color:rgba(255,255,255,0.8); max-width:500px; margin:0 auto 2rem;">Schedule your appointment today and experience world-class healthcare with our expert medical team.</p>
+    <a href="appointment.html" class="btn-primary-custom" style="background:white; color:var(--primary); font-size:1.05rem; padding:1rem 2.5rem;">
+      <i class="bi bi-calendar-check"></i> Book Your Appointment Now
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="footer-brand"><i class="bi bi-heart-pulse-fill"></i> Medi<span>Care</span></div>
+        <p style="font-size:0.9rem; max-width:300px;">Delivering compassionate, high-quality healthcare to our community since 2005.</p>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h5 style="font-size:1rem;">Quick Links</h5>
+        <a href="index.html">Home</a>
+        <a href="doctors.html">Our Doctors</a>
+        <a href="appointment.html">Appointments</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="col-lg-3 col-6">
+        <h5 style="font-size:1rem;">Services</h5>
+        <a href="#">Cardiology</a>
+        <a href="#">Neurology</a>
+        <a href="#">Pediatrics</a>
+        <a href="#">Emergency Care</a>
+      </div>
+      <div class="col-lg-3">
+        <h5 style="font-size:1rem;">Contact</h5>
+        <p style="font-size:0.88rem;"><i class="bi bi-geo-alt-fill me-2" style="color:var(--accent-warm);"></i>123 Healthcare Ave, Hyderabad, TS 500001</p>
+        <p style="font-size:0.88rem;"><i class="bi bi-telephone-fill me-2" style="color:var(--accent-warm);"></i>+91 40 1234 5678</p>
+        <p style="font-size:0.88rem;"><i class="bi bi-envelope-fill me-2" style="color:var(--accent-warm);"></i>info@medicare.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom text-center">
+      <p>© 2024 MediCare Hospital. All rights reserved. | Built with ❤️ for better health.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Load 3 preview doctors on homepage
+async function loadHomeDoctors() {
+  try {
+    const res = await fetch('/api/doctors');
+    const data = await res.json();
+    const grid = document.getElementById('homeDoctorsGrid');
+    if (!data.success || data.doctors.length === 0) {
+      grid.innerHTML = '<div class="col-12 text-center text-muted py-4">No doctors found.</div>';
+      return;
+    }
+    const preview = data.doctors.slice(0, 3);
+    grid.innerHTML = preview.map(d => `
+      <div class="col-md-6 col-lg-4">
+        <div class="doctor-card">
+          <div class="doctor-card-img"><i class="bi bi-person-circle"></i></div>
+          <div class="doctor-card-body">
+            <div class="specialization-badge">${d.specialization}</div>
+            <h5>${d.name}</h5>
+            <div class="available-days"><i class="bi bi-calendar3 mt-1"></i><span>${d.available_days}</span></div>
+            <a href="appointment.html?doctor=${d.id}" class="btn-primary-custom mt-3" style="background:linear-gradient(135deg,var(--primary),var(--primary-light)); font-size:0.85rem; padding:0.6rem 1.4rem;">Book Appointment</a>
+          </div>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    document.getElementById('homeDoctorsGrid').innerHTML = '<div class="col-12 text-center text-muted">Could not load doctors.</div>';
+  }
+}
+loadHomeDoctors();
+</script>
+</body>
+</html>

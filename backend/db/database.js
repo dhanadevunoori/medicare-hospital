@@ -1,14 +1,12 @@
-const Database = require('better-sqlite3');
+const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
 const path = require('path');
 
 const DB_PATH = path.join(__dirname, '../../database.sqlite');
-const db = new Database(DB_PATH);
+const db = new sqlite3.Database(DB_PATH);
 
-db.pragma('journal_mode = WAL');
-
-db.exec(`
-  CREATE TABLE IF NOT EXISTS doctors (
+db.serialize(() => {
+  db.run(`CREATE TABLE IF NOT EXISTS doctors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     specialization TEXT NOT NULL,
@@ -16,9 +14,9 @@ db.exec(`
     image TEXT DEFAULT 'default-doctor.jpg',
     bio TEXT DEFAULT '',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  );
+  )`);
 
-  CREATE TABLE IF NOT EXISTS appointments (
+  db.run(`CREATE TABLE IF NOT EXISTS appointments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     patient_name TEXT NOT NULL,
     phone TEXT NOT NULL,
@@ -29,46 +27,60 @@ db.exec(`
     status TEXT DEFAULT 'pending',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (doctor_id) REFERENCES doctors(id)
-  );
+  )`);
 
-  CREATE TABLE IF NOT EXISTS admins (
+  db.run(`CREATE TABLE IF NOT EXISTS admins (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
-  );
+  )`);
 
-  CREATE TABLE IF NOT EXISTS contacts (
+  db.run(`CREATE TABLE IF NOT EXISTS contacts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     email TEXT NOT NULL,
     subject TEXT NOT NULL,
     message TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  );
-`);
+  )`);
 
-const adminExists = db.prepare('SELECT id FROM admins WHERE username = ?').get('admin');
-if (!adminExists) {
-  const hash = bcrypt.hashSync('admin123', 10);
-  db.prepare('INSERT INTO admins (username, password) VALUES (?, ?)').run('admin', hash);
-  console.log('✅ Admin user created: admin / admin123');
-}
+  // Seed admin
+  db.get('SELECT id FROM admins WHERE username = ?', ['admin'], (err, row) => {
+    if (!row) {
+      const hash = bcrypt.hashSync('admin123', 10);
+      db.run('INSERT INTO admins (username, password) VALUES (?, ?)', ['admin', hash]);
+      console.log('✅ Admin user created');
+    }
+  });
 
-const doctorCount = db.prepare('SELECT COUNT(*) as count FROM doctors').get();
-if (doctorCount.count === 0) {
-  const insertDoctor = db.prepare(
-    'INSERT INTO doctors (name, specialization, available_days, bio) VALUES (?, ?, ?, ?)'
-  );
-  const doctors = [
-    ['Dr. Aisha Sharma', 'Cardiologist', 'Monday, Wednesday, Friday', 'Senior Cardiologist with 15+ years of experience in interventional cardiology.'],
-    ['Dr. Rajiv Mehta', 'Neurologist', 'Tuesday, Thursday, Saturday', 'Expert in neurological disorders and brain health with advanced training from AIIMS.'],
-    ['Dr. Priya Nair', 'Pediatrician', 'Monday, Tuesday, Wednesday, Thursday', 'Compassionate pediatrician specializing in child development and preventive care.'],
-    ['Dr. Suresh Patel', 'Orthopedic Surgeon', 'Wednesday, Friday, Saturday', 'Orthopedic specialist with expertise in joint replacement and sports injuries.'],
-    ['Dr. Meena Iyer', 'Dermatologist', 'Monday, Thursday, Friday', 'Board-certified dermatologist specializing in skin disorders, cosmetic treatments.'],
-    ['Dr. Arjun Reddy', 'General Physician', 'Monday, Tuesday, Wednesday, Thursday, Friday', 'General practice physician focused on preventive medicine and chronic disease management.'],
-  ];
-  doctors.forEach(d => insertDoctor.run(...d));
-  console.log('✅ Sample doctors seeded');
-}
+  // Seed doctors
+  db.get('SELECT COUNT(*) as count FROM doctors', [], (err, row) => {
+    if (row && row.count === 0) {
+      const doctors = [
+        ['Dr. Aisha Sharma', 'Cardiologist', 'Monday, Wednesday, Friday', 'Senior Cardiologist with 15+ years of experience.'],
+        ['Dr. Rajiv Mehta', 'Neurologist', 'Tuesday, Thursday, Saturday', 'Expert in neurological disorders.'],
+        ['Dr. Priya Nair', 'Pediatrician', 'Monday, Tuesday, Wednesday, Thursday', 'Compassionate pediatrician.'],
+        ['Dr. Suresh Patel', 'Orthopedic Surgeon', 'Wednesday, Friday, Saturday', 'Orthopedic specialist.'],
+        ['Dr. Meena Iyer', 'Dermatologist', 'Monday, Thursday, Friday', 'Board-certified dermatologist.'],
+        ['Dr. Arjun Reddy', 'General Physician', 'Monday, Tuesday, Wednesday, Thursday, Friday', 'General practice physician.'],
+      ];
+      const stmt = db.prepare('INSERT INTO doctors (name, specialization, available_days, bio) VALUES (?, ?, ?, ?)');
+      doctors.forEach(d => stmt.run(...d));
+      stmt.finalize();
+      console.log('✅ Sample doctors seeded');
+    }
+  });
+});
+
+// Helper: promisify db methods
+db.asyncGet = (sql, params = []) => new Promise((resolve, reject) => {
+  db.get(sql, params, (err, row) => err ? reject(err) : resolve(row));
+});
+db.asyncAll = (sql, params = []) => new Promise((resolve, reject) => {
+  db.all(sql, params, (err, rows) => err ? reject(err) : resolve(rows));
+});
+db.asyncRun = (sql, params = []) => new Promise((resolve, reject) => {
+  db.run(sql, params, function(err) { err ? reject(err) : resolve({ lastID: this.lastID, changes: this.changes }); });
+});
 
 module.exports = db;

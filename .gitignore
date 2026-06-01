@@ -1,0 +1,11 @@
+# Dependencies
+backend/node_modules/
+
+# Database files
+database.sqlite
+database.sqlite-shm
+database.sqlite-wal
+sessions.sqlite
+
+# Environment variables
+backend/.env

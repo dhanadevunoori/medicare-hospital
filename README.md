@@ -36,6 +36,11 @@ A full-stack hospital management website built for patients to view doctors and 
 - 🗑️ Delete appointments
 - 🔍 Search and filter appointments
 
+## 🗄️ Database File
+
+The complete database schema is available in [`database.sql`](./database.sql) in the root of the project.
+It includes all table definitions (doctors, appointments, admins, contacts) and sample doctor data. 
+
 ## 🗄️ Database Structure
 
 ### Doctors Table
